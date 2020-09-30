@@ -5,16 +5,16 @@
 Resumos organizados por tópicos:
 
  - Introdução
- - O que é AWS?
- - Infraestrutura AWS
- - Regiões
- - Zonas de disponibilidade 
- - Pontos de presença
- - Escopo de serviço
- - Entendendo alguns serviços
+   - O que é AWS?
+   - Infraestrutura AWS
+   - Regiões
+   - Zonas de disponibilidade 
+   - Pontos de presença
+   - Escopo de serviço
+   - Entendendo alguns serviços
  - Segurança na AWS
- - Responsabilidade compartilhada
- - IAM - Identify and Access Management
+   - Responsabilidade compartilhada
+   - IAM - Identify and Access Management
  -   Networking na AWS (Redes)
      - VPC - Virtual Private Cloud
  - Hands On - Criação de um ambiente on premise
