@@ -4,19 +4,25 @@
 
 Resumos organizados por tópicos:
 
+ - Introdução
  - O que é AWS?
  - Infraestrutura AWS
  - Regiões
  - Zonas de disponibilidade 
  - Pontos de presença
- - Entendendo alguns serviços
  - Escopo de serviço
- - Internet Gateway e Virtual Private Gateway
- - Route Table
- - Security Group and Network ACLs
- - Nat Instances and Nat Gateways
- - EC2
+ - Entendendo alguns serviços
+ - Segurança na AWS
+ - Responsabilidade compartilhada
+ - IAM - Identify and Access Management
+ -   Networking na AWS (Redes)
+     - VPC - Virtual Private Cloud
+ - Hands On - Criação de um ambiente on premise
+
  
+
+# Introdução
+
  ## O que é AWS?
 
 Amazon Web Services ou simplesmente AWS é uma plataforma de nuvem, que possui mais de 175 serviços completos de datacenters espalhados pelo mundo. Clique aqui para saber mais: [https://aws.amazon.com/pt/what-is-aws/](https://aws.amazon.com/pt/what-is-aws/)
@@ -83,6 +89,37 @@ São **datacenters provedores de serviços considerados "globais"**. Edge locati
 
 - Amazon S3 Transfer Acceleration
 
+## Escopo de serviço
+
+É definido se o serviço será executado dentro de uma zona de disponibilidade, dentro de todas as AZs ou se o serviço será executado globalmente, isto é, dentro de todas as regiões da AWS.
+
+Temos 3 níveis de escopo de serviço:
+
+- Escopo de zona de disponibilidade
+- Escopo de região
+- Escopo global
+
+Escopo de zona de disponibilidade, serviços englobados:
+
+- EC2
+- RDS
+- EBS
+- PrivateIP
+
+Escopo de região, serviços englobados:
+
+- ELB
+- Auto-Scaling
+- AMI
+- S3
+- Security Group
+
+Escopo global, serviços englobados:
+
+- IAM
+- Route 53
+- Cloud Front
+
 ## Entendendo alguns serviços
 
 **Amazon CloudFront**
@@ -92,15 +129,44 @@ São **datacenters provedores de serviços considerados "globais"**. Edge locati
 > O Amazon CloudFront é um serviço rápido de rede de entrega de conteúdo (CDN) que entrega dados, vídeos, aplicativos e APIs a clientes em todo o mundo com segurança, baixa latência e altas velocidades de transferência em um ambiente de uso facilitado para desenvolvedores. O CloudFront é integrado com a AWS; ambos são locais físicos conectados diretamente à infraestrutura global da AWS, bem como a outros serviços da AWS. O CloudFront funciona de forma transparente com serviços como AWS Shield para mitigação de ataques DDoS; Amazon S3, Elastic Load Balancing ou Amazon EC2 como origens para os aplicativos; e Lambda@Edge para executar código personalizado mais perto dos usuários dos clientes e personalizar a experiência dos usuários. Por fim, se você usar origens na AWS, como Amazon S3, Amazon EC2 ou Elastic Load Balancing, a transferência de dados entre esses serviços e o CloudFront não será cobrada.
 > https://aws.amazon.com/pt/cloudfront/
 
-O CloudFront obtém seus conteúdos de um bucket (contêineres para objetos , tipo dados) do Amazon S3, uma instância do Amazon EC2, um load balancer do Amazon Elastic Load Balancing ou seu próprio servidor web, quando não está em um ponto de presença. Uma coisa legal do ClouFront é que ele pode ser usado para entregar um site ou app inteirinho incluindo conteúdo dinâmico, estático, interativo e de streaming.
+O CloudFront obtém seus conteúdos de um bucket (contêineres para objetos) do Amazon S3, uma instância do Amazon EC2, um load balancer do Amazon Elastic Load Balancing ou seu próprio servidor web, quando não está em um ponto de presença. Uma coisa legal do ClouFront é que ele pode ser usado para entregar um site ou app inteirinho incluindo conteúdo dinâmico, estático, interativo e de streaming.
 
-É possível utilizar esse serviço na modalidade gratuita da AWS, só atentar-se à alguns detalhes:  o nível gratuito da AWS inclui 50 GB de transferência de dados para fora e 2.000.000 de solicitações HTTP e HTTPS com o Amazon CloudFront.
+Principais conceitos do Amazon S3
+
+- Buckets
+- Objects
+- Keys
+- Regions
+
+**Buckets:** é um contêiner para armazenamento de objetos.
+
+**Objetos:** são as entidades armazenadas dentro dos buckets esses objetos consistem em metadados e dados de objeto. **Os metadados são um conjunto de pares de nome e valor que descrevem o objeto** (pense em JSON, por exemplo). Um objeto pode ser identificado dentro de um bucket por meio de uma **chave e um ID de versão**.
+
+**Keys:** são as chaves de identificação de falamos acima, a chave é um identificador exclusivo de um objeto em um bucket. **Cada objeto em um bucket tem exatamente uma chave**.
+
+**Regions:** são as regiões da AWS. Você pode escolher em qual região quer criar o seu bucket e pode levar em conta alguns critérios já mencionados como custo, menor latência na entrega do conteúdo e etc. Um ponto importante é que os dados armazenados em um bucket em determinada região, não são transferidos para outra região a menos que o usuário o transfira para outra região.
+
+**Resumo sobre Amazon S3:**
+
+Podemos pensar no Amazon S3 como um mapa de dados básico constituído por: **bucket + chave + ID de versão + o objeto em si**
+
+Antes de começar a usar o Amazon S3 confira os endpoints que estão disponíveis na região escolhida: [https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region](https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region)
 
 Como configurar um bucket S3 e distribuir o conteúdo usando um navegador web: https://aws.amazon.com/pt/getting-started/hands-on/deliver-content-faster/
 
 Documentação para começara utilizar o CloudFront: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/GettingStarted.html
 
+***OBS: É possivel utilizar o Amazon S3 gratuitamente pelo período de 12 meses***
+
 **Route 53**
+
+O Amazon é um web service de DNS (Domain Name System) altamente disponível e dimensionável.
+
+**O que é um DNS?**
+
+O DNS é um sistema de nomes de domínio. são os responsáveis por localizar e traduzir para números IP os endereços dos sites que digitamos nos navegadores.
+
+Mais sobre DNS:  https://canaltech.com.br/internet/o-que-e-dns/
 
 **Amazon S3**
 
@@ -114,8 +180,74 @@ Vantagens de utilizar esse serviço:
  - Gerenciamento de permissões 
  - Uso de interfaces padrão como por exemplo REST e SOAP
  
-***obs: é recomendável utilizar o padrão API REST***
+***OBS: é recomendável utilizar o padrão API REST***
 
 Documentação sobre o Amazon S3: https://docs.aws.amazon.com/pt_br/AmazonS3/latest/dev/Welcome.html
 
+# Segurança na AWS
 
+## Responsabilidade compartilhada
+
+Ao utilizar os serviços da AWS nós possuímos uma responsabilidade compartilhada com a empresa.
+
+**Responsabilidade da AWS:** a AWS é responsável por proteger a infraestrutura que executa todos os serviços oferecidos na sua nuvem. Essa infraestrutura é composta por hardware, software, redes e instalações que executam os serviços.
+
+**Responsabilidade do usuário:**  a responsabilidade do usuário será determinada pelos serviços de nuvem selecionados por ele hehehe, então cabe ao cliente ler quais "suas atribuições" para cada serviço que for utilizar.
+
+Modelo de responsabilidade compartilhado: https://aws.amazon.com/pt/compliance/shared-responsibility-model/
+
+## IAM - Identify and Access Management
+
+IAM é um serviço da web que ajuda você a controlar o acesso aos recursos da AWS de forma segura
+
+Com o IAM você controla quem é autenticado e autorizado, então é possível criar e gerenciar usuários e grupos dentro da AWS e conceder ou negar permissões por meio de polices.
+
+**Identidades:**
+
+- Usuários: representa uma pessoa ou serviço para interagir com recursos na AWS (quando você cria uma conta na AWS você já é um usuário).
+- Grupos: conjunto de usuários com permissões atribuídas.
+- Funções/Papeis: permite que delegue acesso a usuários e serviços que normalmente não tem acesso aos serviços da AWS. **Permite criar um conjunto de permissões temporários para usuários ou instâncias**.
+
+Polices: permissões e regras de acesso a recursos da AWS, as polices são atreladas a usuários, grupos e funções/papeis
+
+Boa práticas para a criação de usuários ou grupos:  [https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#create-iam-users](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#create-iam-users)
+
+# Networking na AWS (Redes)
+
+## VPC - Virtual Private Cloud
+
+> A Amazon Virtual Private Cloud (Amazon VPC) permite executar os recursos da AWS em uma rede virtual definida por você.
+> Essa rede virtual se assemelha a uma rede tradicional que você operaria no seu datacenter, com os benefícios de usar a infraestrutura dimensionável da AWS.
+> https://docs.aws.amazon.com/pt_br/vpc/latest/userguide/what-is-amazon-vpc.html
+
+**Resumidamente VPC é um serviço que permite o usuário criar e gerenciar uma rede privada dentro da cloud AWS. Amazon VPC é a camada de rede para as instâncias criadas no EC2.**
+
+Principais conceitos de uma VPC:
+
+- VPC — uma rede virtual dedicada à sua conta da AWS.
+
+- Sub-rede — uma gama de endereços IP na VPC.
+
+- Tabela de rotas — um conjunto de regras, chamadas de rotas, que são usadas para determinar para onde o tráfego de rede será direcionado.
+
+- Gateway da Internet — um gateway que você anexa à VPC para permitir a comunicação entre recursos na VPC e a Internet.
+
+- VPC endpoint — permite conectar de forma privada a VPC aos serviços compatíveis da AWS e aos serviços do VPC endpoint desenvolvidos pelo PrivateLink sem exigir um gateway da Internet, um dispositivo NAT, uma conexão VPN ou uma conexão do AWS Direct Connect. **As instâncias na sua VPC não exigem que endereços IP públicos se comuniquem com recursos no serviço. O tráfego entre a sua VPC e os outros serviços não deixa a rede da Amazon.**
+
+Principais componentes de uma VPC:
+
+- Networking access control list (ACLs): lista de controle de acessos, é uma camada de segurança opcional para sua VPC, **funciona como um firewall que controla o trafego de entrada e saída de uma ou mais sub redes**.
+- Security group: grupo que fornece controle de entrada e saída.
+- Route table: tabela de rotas que contém um conjunto de regras usadas para determinar para onde o trafego de rde ou sub rede será direcionado.
+- Nat Gateway: fornece acesso a internet para instâncias EC2.
+- Internet gateway: onde é liberado e fornecido acesso à internet.
+
+***OBS: VPC tem o escopo de região, então quando você criar uma VPC ela existirá em todas as AZs daquela região.***
+
+Infos sobre preço do serviço de VPC:  [https://aws.amazon.com/pt/vpc/pricing/](https://aws.amazon.com/pt/vpc/pricing/)
+
+Cotas da Amazon VPC:  [https://docs.aws.amazon.com/pt_br/vpc/latest/userguide/amazon-vpc-limits.html](https://docs.aws.amazon.com/pt_br/vpc/latest/userguide/amazon-vpc-limits.html)
+
+O que é o AWS Direct Connect?  [https://docs.aws.amazon.com/pt_br/directconnect/latest/UserGuide/Welcome.html](https://docs.aws.amazon.com/pt_br/directconnect/latest/UserGuide/Welcome.html)
+
+# Hands On - Criação de um ambiente on premise
