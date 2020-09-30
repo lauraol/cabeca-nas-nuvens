@@ -29,6 +29,11 @@ Amazon Web Services ou simplesmente AWS é uma plataforma de nuvem, que possui m
 
 ## Infraestrutura AWS
 
+- 24 regiões espalhadas pelo globo
+- 77 zonas de disponibilidade 
+- 216 pontos de presença
+- 245 paises e territórios atendidos
+
 Clique aqui par conferir a infraestrutura da AWS: https://aws.amazon.com/pt/about-aws/global-infrastructure/
 
 ## Regiões (Regions)
