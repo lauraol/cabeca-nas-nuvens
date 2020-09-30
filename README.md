@@ -146,18 +146,6 @@ Principais conceitos do Amazon S3
 
 **Regions:** são as regiões da AWS. Você pode escolher em qual região quer criar o seu bucket e pode levar em conta alguns critérios já mencionados como custo, menor latência na entrega do conteúdo e etc. Um ponto importante é que os dados armazenados em um bucket em determinada região, não são transferidos para outra região a menos que o usuário o transfira para outra região.
 
-**Resumo sobre Amazon S3:**
-
-Podemos pensar no Amazon S3 como um mapa de dados básico constituído por: **bucket + chave + ID de versão + o objeto em si**
-
-Antes de começar a usar o Amazon S3 confira os endpoints que estão disponíveis na região escolhida: [https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region](https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region)
-
-Como configurar um bucket S3 e distribuir o conteúdo usando um navegador web: https://aws.amazon.com/pt/getting-started/hands-on/deliver-content-faster/
-
-Documentação para começara utilizar o CloudFront: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/GettingStarted.html
-
-***OBS: É possivel utilizar o Amazon S3 gratuitamente pelo período de 12 meses***
-
 **Route 53**
 
 O Amazon é um web service de DNS (Domain Name System) altamente disponível e dimensionável.
@@ -181,6 +169,18 @@ Vantagens de utilizar esse serviço:
  - Uso de interfaces padrão como por exemplo REST e SOAP
  
 ***OBS: é recomendável utilizar o padrão API REST***
+
+**Resumo sobre Amazon S3:**
+
+Podemos pensar no Amazon S3 como um mapa de dados básico constituído por: **bucket + chave + ID de versão + o objeto em si**
+
+Antes de começar a usar o Amazon S3 confira os endpoints que estão disponíveis na região escolhida: [https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region](https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region)
+
+Como configurar um bucket S3 e distribuir o conteúdo usando um navegador web: https://aws.amazon.com/pt/getting-started/hands-on/deliver-content-faster/
+
+Documentação para começara utilizar o CloudFront: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/GettingStarted.html
+
+***OBS: É possivel utilizar o Amazon S3 gratuitamente pelo período de 12 meses***
 
 Documentação sobre o Amazon S3: https://docs.aws.amazon.com/pt_br/AmazonS3/latest/dev/Welcome.html
 
