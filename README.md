@@ -138,21 +138,6 @@ Escopo global, serviços englobados:
 
 O CloudFront obtém seus conteúdos de um bucket (contêineres para objetos) do Amazon S3, uma instância do Amazon EC2, um load balancer do Amazon Elastic Load Balancing ou seu próprio servidor web, quando não está em um ponto de presença. Uma coisa legal do ClouFront é que ele pode ser usado para entregar um site ou app inteirinho incluindo conteúdo dinâmico, estático, interativo e de streaming.
 
-Principais conceitos do Amazon S3
-
-- Buckets
-- Objects
-- Keys
-- Regions
-
-**Buckets:** é um contêiner para armazenamento de objetos.
-
-**Objetos:** são as entidades armazenadas dentro dos buckets esses objetos consistem em metadados e dados de objeto. **Os metadados são um conjunto de pares de nome e valor que descrevem o objeto** (pense em JSON, por exemplo). Um objeto pode ser identificado dentro de um bucket por meio de uma **chave e um ID de versão**.
-
-**Keys:** são as chaves de identificação de falamos acima, a chave é um identificador exclusivo de um objeto em um bucket. **Cada objeto em um bucket tem exatamente uma chave**.
-
-**Regions:** são as regiões da AWS. Você pode escolher em qual região quer criar o seu bucket e pode levar em conta alguns critérios já mencionados como custo, menor latência na entrega do conteúdo e etc. Um ponto importante é que os dados armazenados em um bucket em determinada região, não são transferidos para outra região a menos que o usuário o transfira para outra região.
-
 **Route 53**
 
 O Amazon é um web service de DNS (Domain Name System) altamente disponível e dimensionável.
@@ -180,6 +165,21 @@ Vantagens de utilizar esse serviço:
 **Resumo sobre Amazon S3:**
 
 Podemos pensar no Amazon S3 como um mapa de dados básico constituído por: **bucket + chave + ID de versão + o objeto em si**
+
+Principais conceitos do Amazon S3
+
+- Buckets
+- Objects
+- Keys
+- Regions
+
+**Buckets:** é um contêiner para armazenamento de objetos.
+
+**Objetos:** são as entidades armazenadas dentro dos buckets esses objetos consistem em metadados e dados de objeto. **Os metadados são um conjunto de pares de nome e valor que descrevem o objeto** (pense em JSON, por exemplo). Um objeto pode ser identificado dentro de um bucket por meio de uma **chave e um ID de versão**.
+
+**Keys:** são as chaves de identificação de falamos acima, a chave é um identificador exclusivo de um objeto em um bucket. **Cada objeto em um bucket tem exatamente uma chave**.
+
+**Regions:** são as regiões da AWS. Você pode escolher em qual região quer criar o seu bucket e pode levar em conta alguns critérios já mencionados como custo, menor latência na entrega do conteúdo e etc. Um ponto importante é que os dados armazenados em um bucket em determinada região, não são transferidos para outra região a menos que o usuário o transfira para outra região.
 
 Antes de começar a usar o Amazon S3 confira os endpoints que estão disponíveis na região escolhida: [https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region](https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region)
 
