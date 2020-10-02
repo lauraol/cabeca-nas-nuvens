@@ -22,9 +22,6 @@ Resumos organizados por tópicos:
      - Virtual Private Gateway
      - Route Table
      - Security Groups e Network ACLs
- - Hands On - Criação de um ambiente on premise
-
- 
 
 # Introdução
 
