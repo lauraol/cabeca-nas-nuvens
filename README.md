@@ -247,9 +247,13 @@ Principais conceitos de uma VPC:
 Principais componentes de uma VPC:
 
 - Networking access control list (ACLs): lista de controle de acessos, é uma camada de segurança opcional para sua VPC, **funciona como um firewall que controla o trafego de entrada e saída de uma ou mais sub redes**.
+
 - Security group: grupo que fornece controle de entrada e saída.
+
 - Route table: tabela de rotas que contém um conjunto de regras usadas para determinar para onde o trafego de rde ou sub rede será direcionado.
+
 - Nat Gateway: fornece acesso a internet para instâncias EC2.
+
 - Internet gateway: onde é liberado e fornecido acesso à internet.
 
 ***OBS: VPC tem o escopo de região, então quando você criar uma VPC ela existirá em todas as AZs daquela região.***
