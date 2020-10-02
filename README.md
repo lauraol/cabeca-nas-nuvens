@@ -17,6 +17,11 @@ Resumos organizados por tópicos:
    - IAM - Identify and Access Management
  -   Networking na AWS (Redes)
      - VPC - Virtual Private Cloud
+     - Subnet
+     - Internet Gateway
+     - Virtual Private Gateway
+     - Route Table
+     - Security Groups e Network ACLs
  - Hands On - Criação de um ambiente on premise
 
  
@@ -254,5 +259,133 @@ Infos sobre preço do serviço de VPC:  [https://aws.amazon.com/pt/vpc/pricing/]
 Cotas da Amazon VPC:  [https://docs.aws.amazon.com/pt_br/vpc/latest/userguide/amazon-vpc-limits.html](https://docs.aws.amazon.com/pt_br/vpc/latest/userguide/amazon-vpc-limits.html)
 
 O que é o AWS Direct Connect?  [https://docs.aws.amazon.com/pt_br/directconnect/latest/UserGuide/Welcome.html](https://docs.aws.amazon.com/pt_br/directconnect/latest/UserGuide/Welcome.html)
+
+## Subnet
+
+A subnet faz a segmentação de endereçamentos de uma rede dentro de uma VPC na AWS.
+
+As subnets são onde vamos disponibilizar os nossos recursos, como por exemplo uma instância EC2
+
+ - Maior range: /16
+ - Menor range: /28
+
+**Existem dois tipos de subnet:**
+
+ - Subnet pública: possui acesso à internet, é necessário fazer uma  configuração de entrada na route table para um internet gateway.
+ - Subnet privada: não possui acesso a internet.
+
+Documentação: https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html
+
+## Internet gateway
+
+Um Internet Gateway é um componente da VPC horizontalmente dimensionado, redundante e altamente disponível que permite a comunicação entre a VPC e a Internet.
+
+ **Um gateway da internet tem duas finalidades:**
+ 
+ - Fornecer um destino nas tabelas de rotas da VPC para o tráfego roteável na Internet.
+ - Executar a NAT - Network address translation (tradução de endereços de rede) para instâncias designadas com endereços IPv4 públicos.
+
+ Mais informações sobre NAT:
+ https://www.youtube.com/watch?v=BSe7EgvDB6Q
+ 
+https://www.cisco.com/c/pt_br/support/docs/ip/network-address-translation-nat/26704-nat-faq-00.html
+
+Um gateway da internet oferece suporte para tráfego IPv4 e IPv6. Não causa riscos de disponibilidade ou restrições de largura de banda no tráfego de rede. **Não há custo adicional por ter um gateway da Internet na sua conta.**
+
+Documentação: https://docs.aws.amazon.com/pt_br/vpc/latest/userguide/VPC_Internet_Gateway.html
+
+Resumidamente o Internet Gateway é um recurso que possibilita a comunicação das instâncias com a internet.
+
+- Por padrão o internet gateway vem associado a VPC padrão que é gerada quando criamos nossa conta na AWS
+- Cada VPC só poderá tem um Internet Gateway associado
+
+## Virtual Private Gateway
+
+É um recuso que possibilita conexão do ambiente on premise com sua VPC na AWS.
+
+Existem duas formas de configurar um Virtual Private Gateway
+
+- Blade site-to-site: https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html
+- Blade direct connect: https://docs.aws.amazon.com/pt_br/directconnect/latest/UserGuide/Welcome.html
+
+**Blade: espaço dentro da AW onde configuramos os recursos.**
+
+## Route Table
+
+É uma tabela lógica que possui um conjunto de regras, chamadas de rotas, que são utilizadas para direcionar onde seu tráfego de rede, de subnet, ou gateway deve chegar.
+
+Pontos importantes:
+
+ - Uma route table pode estar associada a vária subnets, já uma subnet só poderá estar associada a uma route table.
+ - Uma VPC pode ter várias route tables.
+
+Normalmente as route table são utilizadas para configurar rotas, como por exemplo:
+
+- Internet Gateway
+- Virtual private gateway
+- NAT Gateway
+- VPC Peering
+
+Os conceitos principais das tabelas de rotas são os seguintes:
+
+**Tabela de rotas principal** — a tabela de rotas que vem automaticamente com a VPC. Ela controla o roteamento de todas as sub-redes que não estejam explicitamente associadas com outra tabela de rotas.
+
+ **Tabela de rotas personalizada** — uma tabela de rotas que você cria para a VPC.
+
+ **Associação de borda** — uma tabela de rotas que é usada para encaminhar o tráfego de entrada da VPC para um equipamento. Associe uma tabela de rotas ao gateway da Internet ou ao gateway privado virtual e especifique a interface de rede do seu equipamento como destino do tráfego da VPC.
+
+**Associação de tabela de rotas** — a associação entre uma tabela de rotas e uma sub-rede, gateway da Internet ou gateway privado virtual.
+
+ **Tabela de rotas de sub-rede** — uma tabela de rotas associada a uma sub-rede.
+
+ **Tabela de rotas de gateway** — uma tabela de rotas associada a um gateway da Internet ou gateway privado virtual.
+
+ **Tabela de rotas de gateway local** — uma tabela de rotas associada a um gateway local do Outposts. Para obter informações sobre gateways locais, consulte Gateways locais no Guia do usuário do AWS Outposts.
+
+**Destination (Destino)** – o intervalo de endereços IP para onde você deseja que o tráfego vá (CIDR de destino). Por exemplo, uma rede corporativa externa com um CIDR  [172.16.0.0/12](http://172.16.0.0/12).
+
+**Propagação**— a propagação das rotas permite que um gateway privado virtual propague automaticamente rotas para as tabelas de rotas. Isso significa que você não precisa inserir manualmente rotas VPN para suas tabelas de rotas. Para obter mais informações sobre as opções de roteamento da VPN, consulte Opções de roteamento do Site-to-Site VPN no Guia do usuário do Site-to-Site VPN.
+
+**Target (Destino)** – o gateway, a interface de rede ou a conexão por meio da qual enviar o tráfego de destino; por exemplo, um gateway da Internet.
+
+ **Rota local** — uma rota padrão para comunicação dentro da VPC.
+
+Documentação: https://docs.aws.amazon.com/pt_br/vpc/latest/userguide/VPC_Route_Tables.html#RouteTables
+
+## Security Groups e Network ACLs
+
+São recursos que liberam tráfego de entreda e saída.
+
+**Diferenças entre security groups e Network ACLs:**
+
+**Security Groups** (atual como um firewall para instâncias EC2):
+
+- Escopo de intâncias
+
+- Politica padrão é permitir
+
+- Regras são stateful (qualquer alteração aplicada a uma regra de entreda será automaticamente aplicada para as regras de saída)
+
+- Aplica-se a uma instância somente se alguém especificar o security group ao executar uma instância ou associa posteriormente o security group com a instância
+
+- Avaliamos todas as regras antes de decidir se permitimos ou não o tráfego
+
+Documentação: https://docs.aws.amazon.com/pt_br/vpc/latest/userguide/VPC_SecurityGroups.html
+
+Network ACLs (atuam como firewall das subnets):
+
+- Escopo de subnet
+
+- Suporta permisão e negação (podemos negar que endereços de IP estabeleção conexão com a minha instância)
+
+- Regras são stateless (qualquer modificação aplicada na regra de entrada não será aplicada automaticamente para a regra de saída, é necessário que você faça manualmente a regra desejada para saída)
+
+- Aplica-se automaticamente a todas as instâncias nas sub-redes com as quais está associada (portanto, fornece uma camada adicional de defesa, caso as regras do grupo de segurança sejam permissivas demais)
+
+- Processamos regras em ordem, começando com a regra de número menor, ao decidir se deve permitir o tráfego
+
+Documentação: https://docs.aws.amazon.com/pt_br/vpc/latest/userguide/vpc-network-acls.html
+
+Leia mais sobre privacidade do tráfego entre redes na VPC:  [https://docs.aws.amazon.com/pt_br/vpc/latest/userguide/VPC_Security.html#VPC_Security_Comparison](https://docs.aws.amazon.com/pt_br/vpc/latest/userguide/VPC_Security.html#VPC_Security_Comparison)
 
 # Hands On - Criação de um ambiente on premise
