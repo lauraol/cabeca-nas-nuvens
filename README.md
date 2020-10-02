@@ -140,7 +140,7 @@ O CloudFront obtém seus conteúdos de um bucket (contêineres para objetos) do 
 
 **Route 53**
 
-O Amazon é um web service de DNS (Domain Name System) altamente disponível e dimensionável.
+O Amazon 53 é um web service de DNS (Domain Name System) altamente disponível e dimensionável.
 
 **O que é um DNS?**
 
