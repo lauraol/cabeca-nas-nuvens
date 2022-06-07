@@ -1,9 +1,3 @@
----
-description: >-
-  Página criada para registrar os meus estudos preparatórios para a certificação
-  AWS Cloud Practitioner.
----
-
 # ☁️Cabeça nas nuvens - AWS para iniciantes☁️
 
 ## Tópicos de estudo
